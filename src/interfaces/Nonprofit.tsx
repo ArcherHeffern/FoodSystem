@@ -1,10 +1,10 @@
 interface Nonprofit {
     name: string;
-    url: string;
-    location: number;
+    profileUrl: string;
+    logoUrl: string;
+    lat_long: string;
     servings: number;
     days_open: Week;
-
 }
 
 interface Week {
