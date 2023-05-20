@@ -1,6 +1,6 @@
 import getFoodBankApi from "./controllers/foodBankCall";
 import postFoodBank from './controllers/postFoodBank';
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 router.get('/api/food-banks/search', getFoodBankApi)
