@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
 import {Response, Request} from 'express';
-import Nonprofit from './interfaces/Nonprofit';
+import Nonprofit from '../interfaces/Nonprofit';
 
-export const getFoodBankApi= async(req: Request, res: Response) => {
+const getFoodBankApi= async(req: Request, res: Response) => {
     if (!req.query?.location) {
         res.send("Bad Request\nRequest requires query string of lat_lng=lat,lng with no spaces").status(400);
         return;
@@ -29,3 +29,5 @@ export const getFoodBankApi= async(req: Request, res: Response) => {
         console.log("something went wrong with the food bank api call", error);
     }}
 }
+
+export default getFoodBankApi;

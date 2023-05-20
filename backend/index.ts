@@ -1,8 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import routes from './routes';
-const morgan = require('morgan');
-const cors = require('cors');
+import morgan from 'morgan';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ const apiKey = process.env.apiKey;
 app.use(cors())
 app.use(morgan('tiny'))
 
-routes(app);
+app.use(routes);
 
 app.get('/', (_, res) => {
     res.send("connected!").status(200);
