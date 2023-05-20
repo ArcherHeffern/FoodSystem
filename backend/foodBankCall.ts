@@ -1,4 +1,4 @@
-import fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 const getFoodBankApi= async(location: string) => {
     try {
