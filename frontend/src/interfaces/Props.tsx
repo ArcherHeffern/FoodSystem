@@ -1,5 +1,5 @@
 interface Props {
-    posts: object;
+    posts: object[];
     setPage: React.Dispatch<React.SetStateAction<string>>;
     center: {
         lat: number;

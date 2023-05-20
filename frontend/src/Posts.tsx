@@ -1,13 +1,15 @@
 import Props from './interfaces/Props';
 
 function Posts(props: Props) {
-    function switchPage() {
-        props.setPage('map');
-    }
     return (
         <>
             <h1>Posts Page</h1>
-           <button onClick={switchPage}>Switch Page</button> 
+           <button onClick={() => props.setPage('map')}>Switch Page</button> 
+           <div>{JSON.stringify(props.posts)}</div>
+           {/* {props.posts.map(element => {
+           <p>{JSON.stringify(element)}</p> 
+           })
+           } */}
         </>
     )
 }

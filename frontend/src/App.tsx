@@ -41,7 +41,7 @@ const App = () => {
         setError(true);
       }
     })
-    fetchData(`${backendURL}/posts`, {}).then(data => {
+    fetchData(`${backendURL}/api/food-banks/search`, {}).then(data => {
       if (data) {
         setPosts(data);
       } else {
