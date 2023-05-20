@@ -1,8 +1,11 @@
-const express = require('express');
-const app = express();
-const dotenv = require('dotenv');
-const port = 8080;
+import express from 'express';
+import dotenv from 'dotenv';
+
 dotenv.config();
+
+const app = express();
+const port = 8080;
+
 const apiKey = process.env.apiKey;
 
 app.get('/apikey', (req, res) => {
