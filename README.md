@@ -9,7 +9,12 @@ cd to frontend and run
 npm start
 ```
 
-cd to the backend and run
-```bash
-npm run dev
-```
+## BACKEND
+### COMMANDS
+#### Run locally with hot refresh
+`npm run dev`
+#### Compile TypeScript into JavaScript
+`npm run build`
+#### Run compiled code
+`npm run start`
+
