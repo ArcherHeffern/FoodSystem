@@ -3,6 +3,10 @@ import {Response, Request} from 'express';
 import Nonprofit from './interfaces/Nonprofit';
 
 export const getFoodBankApi= async(req: Request, res: Response) => {
+    if (!req.query?.location) {
+        res.send("Bad Request\nRequest requires query string of lat_lng=lat,lng with no spaces").status(400);
+        return;
+    }
     try {
         let url = `https://www.givefood.org.uk/api/2/foodbanks/search/?lat_lng=${req.query.location}`;
         const response = await fetch(url)
