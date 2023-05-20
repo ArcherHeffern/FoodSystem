@@ -1,6 +1,7 @@
-import express: any from 'express';
-import dotenv: any from 'dotenv';
-import routes: any from './routes';
+import express from 'express';
+import dotenv from 'dotenv';
+import routes from './routes';
+const cors = require('cors');
 
 dotenv.config();
 
@@ -11,6 +12,10 @@ const apiKey = process.env.apiKey;
 app.use(cors())
 
 routes(app);
+
+app.get('/', (_, res) => {
+    res.send("connected!").status(200);
+})
 
 app.get('/apikey', (req, res) => {
     res.send(apiKey).status(200);
