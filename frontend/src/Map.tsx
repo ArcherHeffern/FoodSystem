@@ -8,7 +8,7 @@ function Map(props: Props) {
          <GoogleMap
           mapContainerClassName="map-container"
           center={props.center}
-          zoom={10}
+          zoom={16}
         />
        </> 
       )

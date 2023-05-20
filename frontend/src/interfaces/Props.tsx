@@ -1,10 +1,8 @@
+import Location from './Location';
 interface Props {
     posts: object[];
     setPage: React.Dispatch<React.SetStateAction<string>>;
-    center: {
-        lat: number;
-        lng: number;
-    }
+    center: Location;
 }
 
 export default Props;

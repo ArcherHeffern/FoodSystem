@@ -1,6 +1,8 @@
 import { useLoadScript } from "@react-google-maps/api";
 import { useMemo, useState, useEffect } from "react";
 import Props from './interfaces/Props'
+import Nonprofit from './interfaces/Nonprofit';
+import Location from './interfaces/Location';
 import Map from './Map';
 import Posts from './Posts';
 import "./App.css";
@@ -15,11 +17,21 @@ Get location of user
 
 const App = () => {
   const [apiKey, setApiKey] = useState('');
-  const [posts, setPosts] = useState({});
-  const [location, setLocation] = useState('');
+  const [posts, setPosts] = useState([] as Nonprofit[]);
+  const [location, setLocation] = useState({lat: 0, lng: 0});
   const [error, setError] = useState(false);
   const [page, setPage] = useState('posts'); // There are 2 pages so far, posts and map 
 
+  function successCallback(position: GeolocationPosition) {
+    setLocation({lat: position.coords.latitude, lng: position.coords.longitude});
+  }
+
+  function errorCallback(error: GeolocationPositionError) {
+    console.log(error.message);
+  }
+  function getLocation() {
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
+  }
   async function fetchData(url: string, headers: object) {
     try {
       const res = await Axios.get(url, { headers: headers });
@@ -41,19 +53,20 @@ const App = () => {
         setError(true);
       }
     })
-    fetchData(`${backendURL}/api/food-banks/search`, {}).then(data => {
+    fetchData(`${backendURL}/api/food-banks/search?location=${location.lat},${location.lng}`, {}).then(data => {
       if (data) {
         setPosts(data);
       } else {
         setError(true);
       }
     });
+    getLocation();
   }, [])
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: apiKey
   });
-  const center = useMemo(() => ({ lat: 18.52043, lng: 73.856743 }), []);
-  const props: Props = { posts, setPage, center}
+  const center: Location = useMemo(() => ({...location}), [location]);
+  const props: Props = { posts , setPage, center}
 
   return (
     <div className="App">
