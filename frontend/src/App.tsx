@@ -1,37 +1,20 @@
-import { useLoadScript } from "@react-google-maps/api";
+import { useLoadScript, GoogleMap } from "@react-google-maps/api";
 import { useMemo, useState, useEffect } from "react";
-import Props from './interfaces/Props'
 import Nonprofit from './interfaces/Nonprofit';
 import Location from './interfaces/Location';
-import Map from './Map';
-import Posts from './Posts';
+import Form from './Form'
 import "./App.css";
 import Axios from 'axios';
 
 const backendURL = 'http://localhost:8080';
 
-/* TODO: 
-Get location of user
-
-*/
-
 const App = () => {
   const [apiKey, setApiKey] = useState('');
   const [posts, setPosts] = useState([] as Nonprofit[]);
-  const [location, setLocation] = useState({lat: 0, lng: 0});
+  const [location, setLocation] = useState({ lat: 0, lng: 0 });
   const [error, setError] = useState(false);
-  const [page, setPage] = useState('posts'); // There are 2 pages so far, posts and map 
 
-  function successCallback(position: GeolocationPosition) {
-    setLocation({lat: position.coords.latitude, lng: position.coords.longitude});
-  }
-
-  function errorCallback(error: GeolocationPositionError) {
-    console.log(error.message);
-  }
-  function getLocation() {
-    navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
-  }
+  // data fetching
   async function fetchData(url: string, headers: object) {
     try {
       const res = await Axios.get(url, { headers: headers });
@@ -61,27 +44,64 @@ const App = () => {
       }
     });
     getLocation();
-  }, [])
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: apiKey
-  });
-  const center: Location = useMemo(() => ({...location}), [location]);
-  const props: Props = { posts , setPage, center}
+  }, []);
 
+  // Geolocation
+  function successCallback(position: GeolocationPosition) {
+    setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+  }
+
+  function errorCallback(error: GeolocationPositionError) {
+    console.log(error.message);
+  }
+  function getLocation() {
+    navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
+  }
+
+  // WHY DOES THIS CODE WORK WHY CAN'T I JUST ASSIGN TO COSNT TFFFF
+    let isLoaded = false;
+    ({ isLoaded } = useLoadScript({
+      googleMapsApiKey: apiKey
+    }));
+
+  const center: Location = useMemo(() => (location), [location]);
+
+  let content;
+
+  if (!isLoaded) {
+    content = <h1>Loading...</h1>
+  } else if (error) {
+    content = (
+    <>
+      <h1>Error loading data</h1>
+      <button onClick={() => setError(false)}>Render Anyways</button>
+    </>)
+  } else {
+    console.log(`else statement: Loaded: ${isLoaded}, error: ${error}, apikey: ${apiKey}`)
+    content = (
+      <>
+        <div className="outer">
+          <h1 className='title'>Food System</h1>
+          <div className="inner">
+            <div className="posts">{JSON.stringify(posts)}
+            <Form />
+            </div>
+            <div className="map">
+              <GoogleMap
+                mapContainerClassName="map-container"
+                center={center}
+                zoom={16}
+              /> 
+            </div> 
+            </div>
+          </div>
+      </>
+    )
+  }
   return (
     <div className="App">
-    {!isLoaded ? (
-      <h1>Loading...</h1>
-    ) : error ? (<>
-      <div>Error loading data: error</div>
-      <button onClick={() => setError(false)}>Render Anyways</button>
-    </>
-    ) : page === 'posts' ? (
-      <Posts {...props} />
-    ) : (
-      <Map {...props}/>
-    )}
-  </div>
+      {content}
+    </div>
   );
 };
 export default App

@@ -7,6 +7,7 @@ const getFoodBankApi= async(req: Request, res: Response) => {
         res.send("Bad Request\nRequest requires query string of lat_lng=lat,lng with no spaces").status(400);
         return;
     }
+    console.log(req.query.location)
     try {
         let url = `https://www.givefood.org.uk/api/2/foodbanks/search/?lat_lng=${req.query.location}`;
         const response = await fetch(url)
@@ -27,6 +28,7 @@ const getFoodBankApi= async(req: Request, res: Response) => {
         res.json(foodBanksList);
     } catch {(error: Error) => {
         console.log("something went wrong with the food bank api call", error);
+        res.status(400).send("Something went wrong with the food bank api call")
     }}
 }
 

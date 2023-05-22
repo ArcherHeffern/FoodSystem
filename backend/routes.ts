@@ -2,9 +2,11 @@ import getFoodBankApi from "./controllers/foodBankCall";
 import postFoodBank from './controllers/postFoodBank';
 import getAllFoodBanks from './controllers/getAllFoodBanks';
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 const router = express.Router();
 
-const apiKey = process.env.apiKey;
+const apiKey = process.env.apiKey || 'error';
 
 router.get('/', (_, res) => {
     res.send("connected!").status(200);
