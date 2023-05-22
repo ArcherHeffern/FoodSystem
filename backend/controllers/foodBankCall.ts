@@ -14,11 +14,11 @@ const getFoodBankApi= async(req: Request, res: Response) => {
         const responseJson = await response.json();
         const foodBanksList: Nonprofit[] = [];
         for (let foodBank of responseJson){
-            const foodBankInstance = {
-                name: foodBank?.name ? foodBank.name : null,
-                profileUrl: foodBank?.urls?.homepage ? foodBank.urls.homepage : null,
-                logoUrl: null,
-                lat_long: foodBank?.lat_lng ? foodBank.lat_lng : null,
+            const foodBankInstance: Nonprofit = {
+                name: foodBank.name ?? "",
+                profileUrl: foodBank?.urls?.homepage ?? "", 
+                logoUrl: "",
+                lat_long: foodBank?.lat_lng ?? "",
                 servings: null,
                 days_open: null,
             };
