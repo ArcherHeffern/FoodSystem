@@ -1,6 +1,6 @@
-import React from 'react';
 import { Form, ErrorMessage, Field, Formik } from 'formik';
 import Nonprofit from './interfaces/Nonprofit';
+import './Form.css';
 
 function NonProfitForm() {
         const initialValues: Nonprofit = {
@@ -23,7 +23,7 @@ function NonProfitForm() {
         console.log(values);
     }
     return (
-        <>
+        <div className='form'>
       <h1>Restaurant Form</h1>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         <Form style={{display: 'flex', flexDirection: 'column', alignItems: 'right', textAlign: 'left'}}>
@@ -95,7 +95,7 @@ function NonProfitForm() {
           <button type="submit">Submit</button>
         </Form>
       </Formik>
-        </>
+        </div>
     )
 }
 

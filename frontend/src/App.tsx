@@ -1,4 +1,5 @@
 import { useLoadScript, GoogleMap } from "@react-google-maps/api";
+import Post from './Post';
 import { useMemo, useState, useEffect } from "react";
 import Nonprofit from './interfaces/Nonprofit';
 import Location from './interfaces/Location';
@@ -13,6 +14,15 @@ const App = () => {
   const [posts, setPosts] = useState([] as Nonprofit[]);
   const [location, setLocation] = useState({ lat: 0, lng: 0 });
   const [error, setError] = useState(false);
+  const [sidebarState, setSidebarState] = useState('posts');
+
+  function showPosts() {
+    setSidebarState('posts');
+  }
+
+  function showForm() {
+    setSidebarState('form');
+  }
 
   // data fetching
   async function fetchData(url: string, headers: object) {
@@ -36,7 +46,15 @@ const App = () => {
         setError(true);
       }
     })
-    fetchData(`${backendURL}/api/food-banks/search?location=${location.lat},${location.lng}`, {}).then(data => {
+    // fetchData(`${backendURL}/api/food-banks/search?location=${location.lat},${location.lng}`, {}).then(data => {
+    //   if (data) {
+    //     setPosts(data);
+    //   } else {
+    //     setError(true);
+    //   }
+  // });
+
+    fetchData(`${backendURL}/api/food-bank`, {}).then(data => {
       if (data) {
         setPosts(data);
       } else {
@@ -83,8 +101,17 @@ const App = () => {
         <div className="outer">
           <h1 className='title'>Food System</h1>
           <div className="inner">
-            <div className="posts">{JSON.stringify(posts)}
+            <div className="posts">
+              <div className="buttons">
+              <button onClick={showPosts}>Posts</button>
+              <button onClick={showForm}>Form</button>
+              </div>
+              {sidebarState === 'posts'? 
+              posts.map(post => {
+                return <Post {...post}/>
+            }): 
             <Form />
+            }
             </div>
             <div className="map">
               <GoogleMap

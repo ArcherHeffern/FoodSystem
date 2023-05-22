@@ -3,11 +3,12 @@ interface Nonprofit {
     profileUrl: string;
     logoUrl: string;
     lat_long: string;
-    servings: number;
-    days_open: Week;
+    servings: number|null;
+    days_open: Week|null;
 }
 
 interface Week {
+    [key: string]: boolean;
     monday: boolean;
     tuesday: boolean;
     wednesday: boolean;

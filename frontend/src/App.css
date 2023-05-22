@@ -32,10 +32,24 @@
 }
 
 .posts {
-  overflow: scroll;
-  top: 120px;
-  left: 0;
-  position: fixed;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: absolute;
   width: 350px;
-  height: calc(100vh);
+  height: calc(100vh - 8rem);
 }
+
+.buttons {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-content: stretch;
+}
+
+.buttons > * {
+  flex-grow: 1;
+  border: 1px solid white;
+  /* border: none; */
+  border-radius: 0;
+}
+
