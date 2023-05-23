@@ -1,8 +1,8 @@
 interface Nonprofit {
     name: string;
-    profileUrl: string;
-    logoUrl: string;
-    lat_long: string;
+    profileUrl: string|null;
+    logoUrl: string|null;
+    lat_long: string|null;
     servings: number|null;
     days_open: Week|null;
 }

@@ -1,4 +1,4 @@
-import { useLoadScript, GoogleMap } from "@react-google-maps/api";
+import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
 import Post from './Post';
 import { useMemo, useState, useEffect } from "react";
 import Nonprofit from './interfaces/Nonprofit';
@@ -118,7 +118,16 @@ const App = () => {
                 mapContainerClassName="map-container"
                 center={center}
                 zoom={16}
-              /> 
+              >
+                {
+                  posts.filter((post) => post?.lat_long).map((post: Nonprofit)=> {
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
+                    const [lat, lng] = post.lat_long.split(",");
+                    return <Marker position={{ lat: Number.parseFloat(lat), lng: Number.parseFloat(lng)}} />
+                  })
+                }
+              </GoogleMap> 
             </div> 
             </div>
           </div>

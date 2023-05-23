@@ -5,25 +5,8 @@ import Nonprofit from "../interfaces/Nonprofit";
 async function getAllFoodBanks(_: Request, res: Response) {
     let foodBanks: Nonprofit[];
     try {
-    // foodBanks = await Nonprofit.find({});
-    foodBanks = [
-        {
-            name: 'foodbank',
-            profileUrl: '',
-            logoUrl: '',
-            lat_long: '0,0',
-            servings: 5,
-            days_open: {
-                monday: true,
-                tuesday: true,
-                wednesday: true,
-                thursday: false,
-                friday: false,
-                saturday: false,
-                sunday: false,
-            }
-        }
-    ]
+        foodBanks = await NonprofitSchema.find({}).exec();
+        console.log(foodBanks);
     } catch (e) {
         res.status(200).send(e);
         return;
