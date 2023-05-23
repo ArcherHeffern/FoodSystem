@@ -107,8 +107,8 @@ const App = () => {
               <button onClick={showForm}>Form</button>
               </div>
               {sidebarState === 'posts'? 
-              posts.map(post => {
-                return <Post {...post}/>
+              posts.map((post, i) => {
+                return <Post {...post } key={i}/>
             }): 
             <Form />
             }
@@ -120,11 +120,14 @@ const App = () => {
                 zoom={16}
               >
                 {
-                  posts.filter((post) => post?.lat_long).map((post: Nonprofit)=> {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    //@ts-ignore
-                    const [lat, lng] = post.lat_long.split(",");
-                    return <Marker position={{ lat: Number.parseFloat(lat), lng: Number.parseFloat(lng)}} />
+                  posts.filter((post) => post?.lat_long).map((post: Nonprofit, i: number)=> {
+                    const [strLat, strLng] = post.lat_long?.split(",")|| 'a';
+                    const lat = Number.parseFloat(strLat);
+                    const lng = Number.parseFloat(strLng);
+                    if (isNaN(lat) || isNaN(lng)) {
+                      return null;
+                    }
+                    return <Marker position={{ lat, lng }} key={i}/>
                   })
                 }
               </GoogleMap> 

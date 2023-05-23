@@ -1,7 +1,7 @@
 import Nonprofit from "./interfaces/Nonprofit";
 import './Post.css';
 
-function Post({name, profileUrl, servings, lat_long, days_open}: Nonprofit) {
+function Post({ name, profileUrl, servings, lat_long, days_open }: Nonprofit) {
               return (<div className="post">
                  <p>Name: {name}</p> 
                  {profileUrl? 

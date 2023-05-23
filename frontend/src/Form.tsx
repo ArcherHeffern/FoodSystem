@@ -1,4 +1,5 @@
 import { Form, ErrorMessage, Field, Formik } from 'formik';
+import Axios from 'axios';
 import Nonprofit from './interfaces/Nonprofit';
 import './Form.css';
 
@@ -19,8 +20,13 @@ function NonProfitForm() {
             sunday: false,
         }
     } 
-    const handleSubmit = (values: Nonprofit) => {
-        console.log(values);
+    const handleSubmit = async (values: Nonprofit) => {
+      try {
+        const res = await Axios.post('http://localhost:8080/api/food-bank', {data: values});
+        console.log(`Success: ${res.status}, ${JSON.stringify(res.data)}`)
+      } catch (e) {
+        console.log("error posting:\n " + e)
+      }
     }
     return (
         <div className='form'>
